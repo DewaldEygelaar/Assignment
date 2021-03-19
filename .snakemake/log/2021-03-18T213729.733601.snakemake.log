@@ -1,0 +1,43 @@
+Building DAG of jobs...
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	metrics
+	3
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/HyperPrep.bam.csv
+    jobid: 5
+    wildcards: sample=HyperPrep
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/HyperPlus.bam.csv
+    jobid: 8
+    wildcards: sample=HyperPlus
+
+Error in rule metrics:
+    jobid: 8
+    output: metrics/HyperPlus.bam.csv
+
+RuleException:
+CalledProcessError in line 145 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake._cvp2bvm.metrics.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 145, in __rule_metrics
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Error in rule metrics:
+    jobid: 5
+    output: metrics/HyperPrep.bam.csv
+
+RuleException:
+CalledProcessError in line 145 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.ql7k_fcy.metrics.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 145, in __rule_metrics
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-18T213729.733601.snakemake.log

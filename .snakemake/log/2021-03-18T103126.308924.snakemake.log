@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 21 of /home/dewald/Documents/snakemake/Snakefile:
+Missing input files for rule trim_forward:
+HyperPrep_R1.fastq

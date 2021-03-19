@@ -1,0 +1,32 @@
+Building DAG of jobs...
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	metrics
+	3
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/HyperPrep.bam.csv
+    jobid: 4
+    wildcards: sample=HyperPrep
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/HyperPlus.bam.csv
+    jobid: 6
+    wildcards: sample=HyperPlus
+
+Finished job 6.
+1 of 3 steps (33%) done
+Finished job 4.
+2 of 3 steps (67%) done
+
+localrule all:
+    input: fastQC/combined_HyperPlus_fastqc.zip, fastQC/combined_HyperPrep_fastqc.zip, data/samples/combined/combined_HyperPlus.fastq, data/samples/combined/combined_HyperPrep.fastq, metrics/HyperPlus.bam.csv, metrics/HyperPrep.bam.csv, data/trimmed/HyperPlus_R1.trim.final.fastq, data/trimmed/HyperPrep_R1.trim.final.fastq, data/trimmed/HyperPlus_R2.trim.final.fastq, data/trimmed/HyperPrep_R2.trim.final.fastq, data/trimmed/HyperPlus_R1.trim.unpaired.fastq, data/trimmed/HyperPrep_R1.trim.unpaired.fastq, data/trimmed/HyperPlus_R2.trim.unpaired.fastq, data/trimmed/HyperPrep_R2.trim.unpaired.fastq, plots/cov.png, plots/mapped.png, plots/depth.png, plots/align.png
+    jobid: 0
+
+Finished job 0.
+3 of 3 steps (100%) done

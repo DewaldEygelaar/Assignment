@@ -1,0 +1,5 @@
+Building DAG of jobs...
+MissingInputException in line 17 of /home/dewald/Documents/snakemake/Snakefile:
+Missing input files for rule merge_fastq:
+data/samples/HyperPrep.bam_R2.fastq
+data/samples/HyperPrep.bam_R1.fastq

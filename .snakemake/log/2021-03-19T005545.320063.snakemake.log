@@ -1,0 +1,142 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	fastqc
+	2	merge_fastq
+	2	metrics
+	2	minimap2
+	1	pdf
+	1	plot
+	2	samtools
+	2	samtools_sort
+	15
+
+rule merge_fastq:
+    input: data/trimmed/HyperPlus_R1.trim.final.fastq, data/trimmed/HyperPlus_R2.trim.final.fastq
+    output: data/samples/combined/combined_HyperPlus.fastq
+    jobid: 10
+    wildcards: sample=HyperPlus
+
+
+rule merge_fastq:
+    input: data/trimmed/HyperPrep_R1.trim.final.fastq, data/trimmed/HyperPrep_R2.trim.final.fastq
+    output: data/samples/combined/combined_HyperPrep.fastq
+    jobid: 3
+    wildcards: sample=HyperPrep
+
+Finished job 10.
+1 of 15 steps (7%) done
+
+rule minimap2:
+    input: data/Ecoli.fa, data/samples/combined/combined_HyperPlus.fastq
+    output: data/samples/combined/combined_HyperPlus.sam
+    jobid: 15
+    wildcards: sample=HyperPlus
+
+Finished job 3.
+2 of 15 steps (13%) done
+
+rule minimap2:
+    input: data/Ecoli.fa, data/samples/combined/combined_HyperPrep.fastq
+    output: data/samples/combined/combined_HyperPrep.sam
+    jobid: 17
+    wildcards: sample=HyperPrep
+
+Finished job 15.
+3 of 15 steps (20%) done
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPlus.sam
+    output: data/mapped_reads/combined_HyperPlus.bam
+    jobid: 19
+    wildcards: sample=HyperPlus
+
+Finished job 17.
+4 of 15 steps (27%) done
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPrep.sam
+    output: data/mapped_reads/combined_HyperPrep.bam
+    jobid: 20
+    wildcards: sample=HyperPrep
+
+Finished job 19.
+5 of 15 steps (33%) done
+
+rule samtools_sort:
+    input: data/mapped_reads/combined_HyperPlus.bam
+    output: data/sorted_reads/combined_HyperPlus.bam
+    jobid: 16
+    wildcards: sample=HyperPlus
+
+Finished job 16.
+6 of 15 steps (40%) done
+
+rule fastqc:
+    input: data/samples/combined/combined_HyperPrep.fastq
+    output: fastQC/combined_HyperPrep_fastqc.zip
+    jobid: 8
+    wildcards: sample=HyperPrep
+
+Finished job 20.
+7 of 15 steps (47%) done
+
+rule samtools_sort:
+    input: data/mapped_reads/combined_HyperPrep.bam
+    output: data/sorted_reads/combined_HyperPrep.bam
+    jobid: 18
+    wildcards: sample=HyperPrep
+
+Finished job 8.
+8 of 15 steps (53%) done
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/HyperPlus.bam.csv
+    jobid: 6
+    wildcards: sample=HyperPlus
+
+Finished job 18.
+9 of 15 steps (60%) done
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/HyperPrep.bam.csv
+    jobid: 7
+    wildcards: sample=HyperPrep
+
+Finished job 6.
+10 of 15 steps (67%) done
+
+rule fastqc:
+    input: data/samples/combined/combined_HyperPlus.fastq
+    output: fastQC/combined_HyperPlus_fastqc.zip
+    jobid: 4
+    wildcards: sample=HyperPlus
+
+Finished job 7.
+11 of 15 steps (73%) done
+
+rule plot:
+    input: metrics/metrics.csv
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+    jobid: 1
+
+Error in rule plot:
+    jobid: 1
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+
+RuleException:
+CalledProcessError in line 161 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.5vu8g1kq.plot.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 161, in __rule_plot
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Finished job 4.
+12 of 15 steps (80%) done
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-19T005545.320063.snakemake.log

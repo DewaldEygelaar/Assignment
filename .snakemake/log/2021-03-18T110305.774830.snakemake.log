@@ -1,0 +1,128 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	fastqc
+	2	merge_fastq
+	2	metrics
+	2	minimap2
+	2	samtools
+	2	samtools_sort
+	13
+
+rule merge_fastq:
+    input: data/trimmed/HyperPlus_R1.trim.final.fastq, data/trimmed/HyperPlus_R2.trim.final.fastq
+    output: data/samples/combined/combined_HyperPlus.fastq
+    jobid: 8
+    wildcards: sample=HyperPlus
+
+
+rule merge_fastq:
+    input: data/trimmed/HyperPrep_R1.trim.final.fastq, data/trimmed/HyperPrep_R2.trim.final.fastq
+    output: data/samples/combined/combined_HyperPrep.fastq
+    jobid: 1
+    wildcards: sample=HyperPrep
+
+Finished job 8.
+1 of 13 steps (8%) done
+
+rule minimap2:
+    input: data/Ecoli.fa, data/samples/combined/combined_HyperPlus.fastq
+    output: data/samples/combined/combined_HyperPlus.sam
+    jobid: 16
+    wildcards: sample=HyperPlus
+
+Finished job 1.
+2 of 13 steps (15%) done
+
+rule minimap2:
+    input: data/Ecoli.fa, data/samples/combined/combined_HyperPrep.fastq
+    output: data/samples/combined/combined_HyperPrep.sam
+    jobid: 11
+    wildcards: sample=HyperPrep
+
+Finished job 16.
+3 of 13 steps (23%) done
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPlus.sam
+    output: data/mapped_reads/combined_HyperPlus.bam
+    jobid: 18
+    wildcards: sample=HyperPlus
+
+Finished job 11.
+4 of 13 steps (31%) done
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPrep.sam
+    output: data/mapped_reads/combined_HyperPrep.bam
+    jobid: 17
+    wildcards: sample=HyperPrep
+
+Finished job 18.
+5 of 13 steps (38%) done
+
+rule samtools_sort:
+    input: data/mapped_reads/combined_HyperPlus.bam
+    output: data/sorted_reads/combined_HyperPlus.bam
+    jobid: 15
+    wildcards: sample=HyperPlus
+
+Finished job 15.
+6 of 13 steps (46%) done
+
+rule fastqc:
+    input: data/samples/combined/combined_HyperPrep.fastq
+    output: fastQC/combined_HyperPrep_fastqc.zip
+    jobid: 6
+    wildcards: sample=HyperPrep
+
+Finished job 17.
+7 of 13 steps (54%) done
+
+rule samtools_sort:
+    input: data/mapped_reads/combined_HyperPrep.bam
+    output: data/sorted_reads/combined_HyperPrep.bam
+    jobid: 12
+    wildcards: sample=HyperPrep
+
+Finished job 6.
+8 of 13 steps (62%) done
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/HyperPlus.bam.csv
+    jobid: 7
+    wildcards: sample=HyperPlus
+
+Finished job 12.
+9 of 13 steps (69%) done
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/HyperPrep.bam.csv
+    jobid: 4
+    wildcards: sample=HyperPrep
+
+Finished job 7.
+10 of 13 steps (77%) done
+
+rule fastqc:
+    input: data/samples/combined/combined_HyperPlus.fastq
+    output: fastQC/combined_HyperPlus_fastqc.zip
+    jobid: 3
+    wildcards: sample=HyperPlus
+
+Finished job 4.
+11 of 13 steps (85%) done
+Finished job 3.
+12 of 13 steps (92%) done
+
+localrule all:
+    input: fastQC/combined_HyperPlus_fastqc.zip, fastQC/combined_HyperPrep_fastqc.zip, data/samples/combined/combined_HyperPlus.fastq, data/samples/combined/combined_HyperPrep.fastq, metrics/HyperPlus.bam.csv, metrics/HyperPrep.bam.csv, data/trimmed/HyperPlus_R1.trim.final.fastq, data/trimmed/HyperPrep_R1.trim.final.fastq, data/trimmed/HyperPlus_R2.trim.final.fastq, data/trimmed/HyperPrep_R2.trim.final.fastq, data/trimmed/HyperPlus_R1.trim.unpaired.fastq, data/trimmed/HyperPrep_R1.trim.unpaired.fastq, data/trimmed/HyperPlus_R2.trim.unpaired.fastq, data/trimmed/HyperPrep_R2.trim.unpaired.fastq
+    jobid: 0
+
+Finished job 0.
+13 of 13 steps (100%) done

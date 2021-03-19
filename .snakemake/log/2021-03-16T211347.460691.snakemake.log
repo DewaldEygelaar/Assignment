@@ -1,0 +1,5 @@
+Building DAG of jobs...
+MissingInputException in line 7 of /home/dewald/Documents/snakemake/Snakefile:
+Missing input files for rule all:
+metrics/combined_HyperPlus.csv
+metrics/combined_HyperPrep.csv

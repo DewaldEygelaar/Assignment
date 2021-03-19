@@ -1,0 +1,36 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	trim_forward
+	2	trim_pairs
+	2	trim_reverse
+	7
+
+Job 14: Trimming the first 24 bases from data/samples/HyperPlus_R1.fastq
+
+Finished job 14.
+1 of 7 steps (14%) done
+
+Job 15: Trimming the first 3 bases from data/samples/HyperPlus_R2.fastq
+
+Finished job 15.
+2 of 7 steps (29%) done
+
+Job 4: Trimming data/trimmed/HyperPlus_R1.trim.fastq and data/trimmed/HyperPlus_R2.trim.fastq as a pair.
+
+Error in rule trim_pairs:
+    jobid: 4
+    output: data/trimmed/HyperPlus_R1.trim.final.fastq, data/trimmed/HyperPlus_R2.trim.final.fastq, data/trimmed/HyperPlus_R1.trim.unpaired.fastq, data/trimmed/HyperPlus_R2.trim.unpaired.fastq
+
+RuleException:
+CalledProcessError in line 65 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  java -jar /home/dewald/bin/trimmomatic.jar PE
+        -threads 2         -phred33 data/trimmed/HyperPlus_R1.trim.fastq data/trimmed/HyperPlus_R2.trim.fastq         data/trimmed/HyperPlus_R1.trim.final.fastq         data/trimmed/HyperPlus_R1.trim.unpaired.fastq         data/trimmed/HyperPlus_R2.trim.final.fastq         data/trimmed/HyperPlus_R2.trim.unpaired.fastq         ILLUMINACLIP:resources/adapters.fa:2:30:10:1:TRUE        LEADING:3 TRAILING:3         SLIDINGWINDOW:4:15 MINLEN:36 ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 65, in __rule_trim_pairs
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-18T105308.210708.snakemake.log

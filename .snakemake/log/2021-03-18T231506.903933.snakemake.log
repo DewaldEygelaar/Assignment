@@ -1,0 +1,3 @@
+SyntaxError:
+Not all output files of rule metrics contain the same wildcards.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 148, in <module>

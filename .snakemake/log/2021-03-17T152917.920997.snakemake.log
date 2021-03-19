@@ -1,0 +1,87 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	fastqc
+	2	merge_fastq
+	2	metrics
+	2	minimap2
+	2	samtools
+	2	samtools_sort
+	13
+
+rule merge_fastq:
+    input: data/samples/HyperPlus_R1.fastq, data/samples/HyperPlus_R2.fastq
+    output: data/samples/combined/combined_HyperPlus.fastq
+    jobid: 6
+    wildcards: sample=HyperPlus
+
+
+rule merge_fastq:
+    input: data/samples/HyperPrep_R1.fastq, data/samples/HyperPrep_R2.fastq
+    output: data/samples/combined/combined_HyperPrep.fastq
+    jobid: 1
+    wildcards: sample=HyperPrep
+
+Finished job 1.
+1 of 13 steps (8%) done
+
+rule minimap2:
+    input: data/Ecoli.fa, data/samples/combined/combined_HyperPrep.fastq
+    output: data/samples/combined/combined_HyperPrep.sam
+    jobid: 10
+    wildcards: sample=HyperPrep
+
+Finished job 6.
+2 of 13 steps (15%) done
+
+rule minimap2:
+    input: data/Ecoli.fa, data/samples/combined/combined_HyperPlus.fastq
+    output: data/samples/combined/combined_HyperPlus.sam
+    jobid: 9
+    wildcards: sample=HyperPlus
+
+Finished job 9.
+3 of 13 steps (23%) done
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPlus.sam
+    output: data/mapped_reads/combined_HyperPlus.bam
+    jobid: 12
+    wildcards: sample=HyperPlus
+
+Finished job 10.
+4 of 13 steps (31%) done
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPrep.sam
+    output: data/mapped_reads/combined_HyperPrep.bam
+    jobid: 13
+    wildcards: sample=HyperPrep
+
+Terminating processes on user request.
+Error in rule samtools:
+    jobid: 12
+    output: data/mapped_reads/combined_HyperPlus.bam
+
+Error in rule samtools:
+    jobid: 13
+    output: data/mapped_reads/combined_HyperPrep.bam
+
+RuleException:
+CalledProcessError in line 50 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  samtools view -Sb - > data/mapped_reads/combined_HyperPlus.bam ' died with <Signals.SIGINT: 2>.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 50, in __rule_samtools
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Removing output files of failed job samtools since they might be corrupted:
+data/mapped_reads/combined_HyperPlus.bam
+RuleException:
+CalledProcessError in line 50 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  samtools view -Sb - > data/mapped_reads/combined_HyperPrep.bam ' died with <Signals.SIGINT: 2>.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 50, in __rule_samtools
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Removing output files of failed job samtools since they might be corrupted:
+data/mapped_reads/combined_HyperPrep.bam
+Complete log: .snakemake/log/2021-03-17T152917.920997.snakemake.log

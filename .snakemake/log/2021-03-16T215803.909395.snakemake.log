@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	metrics
+	3
+
+rule metrics:
+    input: sorted_reads/combined_HyperPrep.bam
+    output: metrics/combined_HyperPrep.csv
+    jobid: 4
+    wildcards: sample=HyperPrep
+
+rule metrics:
+    input: sorted_reads/combined_HyperPlus.bam
+    output: metrics/combined_HyperPlus.csv
+    jobid: 6
+    wildcards: sample=HyperPlus
+
+Waiting at most 5 seconds for missing files.
+Waiting at most 5 seconds for missing files.
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-16T215803.909395.snakemake.log

@@ -1,0 +1,60 @@
+Building DAG of jobs...
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	metrics
+	1	pdf
+	1	plot
+	5
+
+rule pdf:
+    output: PDF/Report.pdf
+    jobid: 6
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/HyperPrep.bam.csv
+    jobid: 9
+    wildcards: sample=HyperPrep
+
+rule plot:
+    input: metrics/metrics.csv
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+    jobid: 3
+
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/HyperPlus.bam.csv
+    jobid: 8
+    wildcards: sample=HyperPlus
+
+Error in rule pdf:
+    jobid: 6
+    output: PDF/Report.pdf
+
+RuleException:
+CalledProcessError in line 167 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.we1zlddi.pdf.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 167, in __rule_pdf
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Error in rule plot:
+    jobid: 3
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+
+RuleException:
+CalledProcessError in line 160 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.qcbd1ffq.plot.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 160, in __rule_plot
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Finished job 8.
+1 of 5 steps (20%) done
+Finished job 9.
+2 of 5 steps (40%) done
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-19T004609.658122.snakemake.log

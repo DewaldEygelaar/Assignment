@@ -1,0 +1,32 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	metrics
+	3
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/combined_HyperPlus.bam.csv
+    jobid: 4
+    wildcards: sample=HyperPlus
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/combined_HyperPrep.bam.csv
+    jobid: 3
+    wildcards: sample=HyperPrep
+
+Finished job 4.
+1 of 3 steps (33%) done
+Finished job 3.
+2 of 3 steps (67%) done
+
+localrule all:
+    input: plots/quals.svg, fastQC/combined_HyperPlus_fastqc.zip, fastQC/combined_HyperPrep_fastqc.zip, data/samples/combined/combined_HyperPlus.fastq, data/samples/combined/combined_HyperPrep.fastq, metrics/combined_HyperPlus.bam.csv, metrics/combined_HyperPrep.bam.csv
+    jobid: 0
+
+Finished job 0.
+3 of 3 steps (100%) done

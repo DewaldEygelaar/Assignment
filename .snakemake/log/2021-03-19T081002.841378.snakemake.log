@@ -1,0 +1,41 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	pdf
+	1	plot
+	3
+
+rule pdf:
+    output: PDF/Report.pdf
+    jobid: 6
+
+rule plot:
+    input: metrics/metrics.csv
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+    jobid: 5
+
+Error in rule pdf:
+    jobid: 6
+    output: PDF/Report.pdf
+
+RuleException:
+CalledProcessError in line 168 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.q61n_uaw.pdf.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 168, in __rule_pdf
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Error in rule plot:
+    jobid: 5
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+
+RuleException:
+CalledProcessError in line 161 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.sdnistm_.plot.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 161, in __rule_plot
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-19T081002.841378.snakemake.log

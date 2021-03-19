@@ -1,0 +1,65 @@
+Building DAG of jobs...
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	fastqc
+	2	merge_fastq
+	2	metrics
+	2	minimap2
+	1	pdf
+	1	plot
+	2	samtools
+	2	samtools_sort
+	2	trim_forward
+	2	trim_pairs
+	2	trim_reverse
+	21
+
+rule pdf:
+    output: PDF/Report.pdf
+    jobid: 10
+
+rule plot:
+    input: metrics/metrics.csv
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+    jobid: 5
+
+
+Job 12: Trimming the first 3 bases from data/samples/HyperPlus_R2.fastq
+
+
+Job 14: Trimming the first 3 bases from data/samples/HyperPrep_R2.fastq
+
+
+Job 11: Trimming the first 24 bases from data/samples/HyperPlus_R1.fastq
+
+
+Job 13: Trimming the first 24 bases from data/samples/HyperPrep_R1.fastq
+
+Error in rule pdf:
+    jobid: 10
+    output: PDF/Report.pdf
+
+RuleException:
+CalledProcessError in line 167 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.icsp1uye.pdf.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 167, in __rule_pdf
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Finished job 11.
+1 of 21 steps (5%) done
+Finished job 14.
+2 of 21 steps (10%) done
+Finished job 12.
+3 of 21 steps (14%) done
+Will exit after finishing currently running jobs.
+Finished job 13.
+4 of 21 steps (19%) done
+Will exit after finishing currently running jobs.
+Finished job 5.
+5 of 21 steps (24%) done
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-18T231956.673162.snakemake.log

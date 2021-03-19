@@ -1,0 +1,5 @@
+Building DAG of jobs...
+MissingInputException in line 35 of /home/dewald/Documents/snakemake/Snakefile:
+Missing input files for rule trim_reverse:
+HyperPrep_R2.fastq
+/home/dewald/bin/trimmomatic-0.35.jar

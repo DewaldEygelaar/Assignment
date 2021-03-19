@@ -1,0 +1,90 @@
+Building DAG of jobs...
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	fastqc
+	2	metrics
+	2	samtools
+	2	samtools_sort
+	9
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPlus.sam
+    output: data/mapped_reads/combined_HyperPlus.bam
+    jobid: 12
+    wildcards: sample=HyperPlus
+
+
+rule samtools:
+    input: data/samples/combined/combined_HyperPrep.sam
+    output: data/mapped_reads/combined_HyperPrep.bam
+    jobid: 13
+    wildcards: sample=HyperPrep
+
+Finished job 12.
+1 of 9 steps (11%) done
+
+rule samtools_sort:
+    input: data/mapped_reads/combined_HyperPlus.bam
+    output: data/sorted_reads/combined_HyperPlus.bam
+    jobid: 9
+    wildcards: sample=HyperPlus
+
+Finished job 13.
+2 of 9 steps (22%) done
+
+rule samtools_sort:
+    input: data/mapped_reads/combined_HyperPrep.bam
+    output: data/sorted_reads/combined_HyperPrep.bam
+    jobid: 11
+    wildcards: sample=HyperPrep
+
+Finished job 9.
+3 of 9 steps (33%) done
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPlus.bam, data/samples/combined/combined_HyperPlus.sam
+    output: metrics/HyperPlus.bam.csv
+    jobid: 3
+    wildcards: sample=HyperPlus
+
+Finished job 11.
+4 of 9 steps (44%) done
+
+rule metrics:
+    input: data/sorted_reads/combined_HyperPrep.bam, data/samples/combined/combined_HyperPrep.sam
+    output: metrics/HyperPrep.bam.csv
+    jobid: 4
+    wildcards: sample=HyperPrep
+
+Finished job 3.
+5 of 9 steps (56%) done
+
+rule fastqc:
+    input: data/samples/combined/combined_HyperPlus.fastq
+    output: fastQC/combined_HyperPlus_fastqc.zip
+    jobid: 5
+    wildcards: sample=HyperPlus
+
+Finished job 4.
+6 of 9 steps (67%) done
+
+rule fastqc:
+    input: data/samples/combined/combined_HyperPrep.fastq
+    output: fastQC/combined_HyperPrep_fastqc.zip
+    jobid: 6
+    wildcards: sample=HyperPrep
+
+Finished job 6.
+7 of 9 steps (78%) done
+Finished job 5.
+8 of 9 steps (89%) done
+
+localrule all:
+    input: plots/quals.svg, fastQC/combined_HyperPlus_fastqc.zip, fastQC/combined_HyperPrep_fastqc.zip, data/samples/combined/combined_HyperPlus.fastq, data/samples/combined/combined_HyperPrep.fastq, metrics/HyperPlus.bam.csv, metrics/HyperPrep.bam.csv
+    jobid: 0
+
+Finished job 0.
+9 of 9 steps (100%) done

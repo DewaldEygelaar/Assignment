@@ -1,0 +1,2 @@
+SyntaxError in line 167 of /home/dewald/Documents/snakemake/Snakefile:
+Multiple run or shell keywords in rule plot. (Snakefile, line 167)

@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 149 of /home/dewald/Documents/snakemake/Snakefile:
+Missing input files for rule plot:
+metrics/metrics.csv

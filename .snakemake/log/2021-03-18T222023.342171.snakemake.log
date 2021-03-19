@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	plot
+	2
+
+rule plot:
+    input: metrics/metrics2.csv
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+    jobid: 1
+
+Error in rule plot:
+    jobid: 1
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+
+RuleException:
+CalledProcessError in line 160 of /home/dewald/Documents/snakemake/Snakefile:
+Command ' set -euo pipefail;  /usr/bin/python3 /home/dewald/Documents/snakemake/scripts/.snakemake.b3l6xrqk.plot.py ' returned non-zero exit status 1.
+  File "/home/dewald/Documents/snakemake/Snakefile", line 160, in __rule_plot
+  File "/usr/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Removing output files of failed job plot since they might be corrupted:
+plots/cov.png, plots/depth.png, plots/mapped.png
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2021-03-18T222023.342171.snakemake.log

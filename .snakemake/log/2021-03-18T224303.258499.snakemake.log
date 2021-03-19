@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	plot
+	2
+
+rule plot:
+    input: metrics/metrics.csv
+    output: plots/cov.png, plots/depth.png, plots/mapped.png, plots/align.png
+    jobid: 4
+
+Finished job 4.
+1 of 2 steps (50%) done
+
+localrule all:
+    input: fastQC/combined_HyperPlus_fastqc.zip, fastQC/combined_HyperPrep_fastqc.zip, data/samples/combined/combined_HyperPlus.fastq, data/samples/combined/combined_HyperPrep.fastq, metrics/HyperPlus.bam.csv, metrics/HyperPrep.bam.csv, data/trimmed/HyperPlus_R1.trim.final.fastq, data/trimmed/HyperPrep_R1.trim.final.fastq, data/trimmed/HyperPlus_R2.trim.final.fastq, data/trimmed/HyperPrep_R2.trim.final.fastq, data/trimmed/HyperPlus_R1.trim.unpaired.fastq, data/trimmed/HyperPrep_R1.trim.unpaired.fastq, data/trimmed/HyperPlus_R2.trim.unpaired.fastq, data/trimmed/HyperPrep_R2.trim.unpaired.fastq, plots/cov.png, plots/mapped.png, plots/depth.png, plots/align.png
+    jobid: 0
+
+Finished job 0.
+2 of 2 steps (100%) done
